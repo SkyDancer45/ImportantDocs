@@ -1,0 +1,32 @@
+static Node* Remove(int data, Node* root) {
+    if (root == nullptr) {
+        return nullptr; // Base case: node not found
+    }
+
+    if (data < root->dt) {
+        root->left = Remove(data, root->left);
+    } else if (data > root->dt) {
+        root->right = Remove(data, root->right);
+    } else {
+        // Node to be deleted found
+        if (root->left == nullptr) {
+            Node* temp = root->right;
+            delete root;
+            return temp;
+        } else if (root->right == nullptr) {
+            Node* temp = root->left;
+            delete root;
+            return temp;
+        } else   
+ {
+            // Node with two children
+            Node* temp = root->right;
+            while (temp->left != nullptr) {
+                temp = temp->left;
+            }
+            root->dt = temp->dt;
+            root->right = Remove(temp->dt, root->right);
+        }
+    }
+    return root;
+}
